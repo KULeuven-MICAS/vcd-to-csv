@@ -26,3 +26,12 @@ jobs:
         with:
           name: vcd-to-csv
           path: target/release/vcd-to-csv
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: target/release/vcd-to-csv
+          asset_name: vcd-to-csv
