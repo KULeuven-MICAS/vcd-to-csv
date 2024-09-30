@@ -65,7 +65,7 @@ fn parse_vcd_to_data(vcd_file: &str) -> Result<(), Box<dyn std::error::Error>> {
     }
 
     // Prepare CSV writer
-    let mut wtr = csv::Writer::from_path("result.csv")?;
+    let mut wtr = csv::Writer::from_path("sim.csv")?;
 
     // Write headers (variable names)
     let mut headers: Vec<String> = Vec::new();
@@ -94,7 +94,7 @@ fn parse_vcd_to_data(vcd_file: &str) -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn main() {
-    if let Err(e) = parse_vcd_to_data("src/sim.vcd") {
+    if let Err(e) = parse_vcd_to_data("sim.vcd") {
         eprintln!("Error parsing VCD file: {}", e);
     }
 }
