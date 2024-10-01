@@ -62,7 +62,7 @@ fn parse_vcd_to_data(vcd_file: &str) -> Result<(), Box<dyn std::error::Error>> {
                             Value::V0 | Value::X | Value::Z => 0,
                             Value::V1 => 1,
                         };
-                        result |= bit << i;
+                        result |= bit << (vector.len() - i - 1);
                     }
                     current_frame.insert(id_code, result);
                 }
