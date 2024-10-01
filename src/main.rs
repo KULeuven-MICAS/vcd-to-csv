@@ -54,10 +54,17 @@ fn parse_vcd_to_data(vcd_file: &str) -> Result<(), Box<dyn std::error::Error>> {
                     };
                 }
             }
-            Command::ChangeVector(id_code, _) => {
+            Command::ChangeVector(id_code, vector) => {
                 if scope_identifiers.contains_key(&id_code) {
-                    // Vector is unhandled case - always program 0
-                    current_frame.insert(id_code, 0);
+                    let mut result: u64 = 0;
+                    for (i, value) in vector.iter().enumerate() {
+                        let bit = match value {
+                            Value::V0 | Value::X | Value::Z => 0,
+                            Value::V1 => 1,
+                        };
+                        result |= bit << i;
+                    }
+                    current_frame.insert(id_code, result);
                 }
             }
             _ => {}
