@@ -3,6 +3,7 @@ name: Build conda package
 on:
   release:
     types: [published]
+  pull_request:
 
 jobs:
   build:
