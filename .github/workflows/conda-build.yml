@@ -1,6 +1,7 @@
 name: Build conda package
 
 on:
+  push:
   release:
     types: [published]
   pull_request:
@@ -12,25 +13,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      # Extract the version from the release tag
-      - name: Set version from release
-        id: version
-        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
-      - uses: prefix-dev/setup-pixi@v0.8.1
-      - run: pixi add conda-build
+      - name: Build conda package
+        uses: prefix-dev/rattler-build-action@v0.2.23
+        with:
+          recipe-path: conda/meta.yaml
 
       - name: Upload binary artifact
         uses: actions/upload-artifact@v3
         with:
           name: conda-package
-          path: .pixi/envs/default/conda-bld/linux-64/vcd-to-csv-0.1.0-0.tar.bz2
+          path: conda/output/linux-64/vcd-to-csv-*.conda
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: .pixi/envs/default/conda-bld/linux-64/vcd-to-csv-0.1.0-0.tar.bz2
+          asset_path: conda/output/linux-64/vcd-to-csv-*.conda
           asset_name: vcd-to-csv-0.1.0-0.tar.bz2
           asset_content_type: application/x-bzip2          
