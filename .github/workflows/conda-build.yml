@@ -1,10 +1,8 @@
 name: Build conda package
 
 on:
-  push:
   release:
     types: [published]
-  pull_request:
 
 jobs:
   build:
