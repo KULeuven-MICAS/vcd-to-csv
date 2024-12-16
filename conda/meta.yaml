@@ -1,6 +1,6 @@
 package:
   name: vcd-to-csv
-  version: "0.1.0"
+  version: "{{ environ['VERSION'] }}"
 
 source:
   git_url: https://github.com/KULeuven-MICAS/vcd-to-csv

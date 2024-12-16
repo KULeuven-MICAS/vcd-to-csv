@@ -1,0 +1,35 @@
+name: Build conda package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      # Extract the version from the release tag
+      - name: Set version from release
+        id: version
+        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+
+      - uses: prefix-dev/setup-pixi@v0.8.1
+      - run: pixi add conda-build
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: conda-package
+          path: .pixi/envs/default/conda-bld/linux-64/vcd-to-csv-0.1.0-0.tar.bz2
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: .pixi/envs/default/conda-bld/linux-64/vcd-to-csv-0.1.0-0.tar.bz2
+          asset_name: vcd-to-csv-0.1.0-0.tar.bz2
+          asset_content_type: application/x-bzip2          
