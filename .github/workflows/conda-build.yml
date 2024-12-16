@@ -24,12 +24,3 @@ jobs:
         with:
           name: conda-package
           path: conda/output/linux-64/vcd-to-csv-*.conda
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: conda/output/linux-64/vcd-to-csv-*.conda
-          asset_name: vcd-to-csv-0.1.0-0.tar.bz2
-          asset_content_type: application/x-bzip2          
