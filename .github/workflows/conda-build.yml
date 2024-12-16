@@ -18,9 +18,3 @@ jobs:
         uses: prefix-dev/rattler-build-action@v0.2.23
         with:
           recipe-path: conda/meta.yaml
-
-      - name: Upload binary artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: conda-package
-          path: conda/output/linux-64/vcd-to-csv-*.conda
