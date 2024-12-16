@@ -1,0 +1,17 @@
+package:
+  name: vcd-to-csv
+  version: 0.1.4
+
+source:
+  git: https://github.com/KULeuven-MICAS/vcd-to-csv
+  rev: main
+
+requirements:
+  build:
+    - rust
+  run:
+    - libgcc-ng
+
+about:
+  homepage: https://github.com/KULeuven-MICAS/vcd-to-csv
+  summary: "A utility to convert VCD files to CSV."
